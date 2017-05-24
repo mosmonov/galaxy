@@ -36,7 +36,7 @@ sun.fill.effect.aspectRatio = ( sun.width / sun.height )
 sun.fill.effect.seed = 0
 
 local mercury = display.newCircle(display.contentWidth*.360, 
-display.contentCenterY, 28.8)
+display.contentCenterY, 20.8)
 mercury:setFillColor(1,0,0)
 
 local mercuryOrbit = display.newCircle( 550, 950, 160 )
@@ -46,7 +46,7 @@ mercuryOrbit.alpha = 0.1  -- set to 10% opacity
 
 
 local venus = display.newCircle(display.contentWidth*.290, 
-display.contentCenterY, 22.8)
+display.contentCenterY, 36.8)
 venus:setFillColor(1,1,0)
 local venusOrbit = display.newCircle( 550, 950, 230 )
 venusOrbit.strokeWidth = 20
@@ -64,9 +64,9 @@ earthOrbit.alpha = 0.1  -- set to 10% opacity
 
 
 local mars = display.newCircle(display.contentWidth*.120, 
-display.contentCenterY, 20.8)
+display.contentCenterY, 30.8)
 mars:setFillColor(1,0,0)
-local marsOrbit = display.newCircle( 550, 950, 410 )
+local marsOrbit = display.newCircle( 550, 950, 420 )
 marsOrbit.strokeWidth = 20
 marsOrbit:setStrokeColor( 0.5, 0.5, 0.3 )
 marsOrbit.alpha = 0.1  -- set to 10% opacity
@@ -84,37 +84,44 @@ physics.addBody(earth, "dynamic", {density=0, friction=0,
 radius=42.8})
 
 physics.addBody(mars, "dynamic", {density=0, friction=0,
-radius=20.8})
+radius=22.8})
 
 local mercuryJoint = physics.newJoint("pivot", sun, mercury,
 sun.x, sun.y)
-mercuryJoint.isMotorEnabled = false
-mercuryJoint.motorSpeed = -150
-mercuryJoint.maxMotorTorque = 100
+-- mercuryJoint.isMotorEnabled = false
+-- mercuryJoint.motorSpeed = -150
+-- mercuryJoint.maxMotorTorque = 100
 
 local venusJoint = physics.newJoint("pivot", sun, venus,
 sun.x, sun.y)
-venusJoint.isMotorEnabled = false
-venusJoint.motorSpeed = -110
-venusJoint.maxMotorTorque = 100
+-- venusJoint.isMotorEnabled = false
+-- venusJoint.motorSpeed = -110
+-- venusJoint.maxMotorTorque = 100
 
 local earthJoint = physics.newJoint("pivot", sun, earth,
 sun.x, sun.y)
-earthJoint.isMotorEnabled = false
-earthJoint.motorSpeed = -50
-earthJoint.maxMotorTorque = 100
+-- earthJoint.isMotorEnabled = false
+-- earthJoint.motorSpeed = -50
+-- earthJoint.maxMotorTorque = 100
 
 local marsJoint = physics.newJoint("pivot", sun, mars,
 sun.x, sun.y)
-marsJoint.isMotorEnabled = false
-marsJoint.motorSpeed = -40
-marsJoint.maxMotorTorque = 100
+-- marsJoint.isMotorEnabled = false
+-- marsJoint.motorSpeed = -40
+-- marsJoint.maxMotorTorque = 100
+
+function startPlanet(planetObject, motorSpeed, maxMotorTorque)
+    planetObject.isMotorEnabled = true
+    planetObject.motorSpeed = motorSpeed
+    planetObject.maxMotorTorque = maxMotorTorque
+    return planetObject
+end
 
 function start (event)
-    mercuryJoint.isMotorEnabled = true
-    venusJoint.isMotorEnabled = true
-    earthJoint.isMotorEnabled = true
-    marsJoint.isMotorEnabled = true
+    startPlanet(mercuryJoint, -90, 100)
+    startPlanet(venusJoint, -80, 100)
+    startPlanet(earthJoint, -50, 100)
+    startPlanet(marsJoint, -40, 100)
     return false
 end
 
